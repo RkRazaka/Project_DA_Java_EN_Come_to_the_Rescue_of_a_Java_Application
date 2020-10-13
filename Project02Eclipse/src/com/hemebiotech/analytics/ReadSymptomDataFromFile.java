@@ -2,9 +2,13 @@ package com.hemebiotech.analytics;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 /**
  * Simple brute force implementation
@@ -12,7 +16,8 @@ import java.util.List;
  */
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
-	private String filepath;
+	private final String filepath;
+	private static final String DEFAULT_OUT = "result.out";
 	
 	/**
 	 * 
@@ -24,7 +29,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	
 	@Override
 	public List<String> GetSymptoms() {
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<>();
 		
 		if (filepath != null) {
 			try {
@@ -36,12 +41,42 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 					line = reader.readLine();
 				}
 				reader.close();
+				
+				if (result.isEmpty()) {
+					throw new IllegalStateException("The symtomps.txt file is empty, so result.out is not written");
+				}
+				
 			} catch (IOException e) {
+				System.err.println("ERROR ACCESS FILE : 'symptoms.txt'");
 				e.printStackTrace();
 			}
 		}
 		
 		return result;
 	}
-
+	
+	public Map<String, Integer> countNumberSymptoms(List<String> listFromFile) {
+		TreeMap<String, Integer> mapSymptoms = new TreeMap<>();
+		if (listFromFile != null && !listFromFile.isEmpty()) {
+			for (String temp : listFromFile) {
+				mapSymptoms.put(temp, !mapSymptoms.containsKey(temp) ? 1 : (mapSymptoms.get(temp) + 1));
+			}
+		}
+		return mapSymptoms;
+	}
+	
+	public void result(Map<String, Integer> res) throws IOException {
+		FileWriter writer = new FileWriter(DEFAULT_OUT);
+		for (Map.Entry<String, Integer> entry : res.entrySet()) {
+			try {
+				writer.write(entry.getKey() + "=" + entry.getValue());
+				writer.write(System.getProperty("line.separator"));
+			} catch (IOException e) {
+				System.err.println("Error Access Of result.out File");
+				e.printStackTrace();
+			}
+		}
+		writer.close();
+		System.out.println("THE 'result.out' FILE IS SUCCESSFULLY WRITTEN");
+	}
 }
