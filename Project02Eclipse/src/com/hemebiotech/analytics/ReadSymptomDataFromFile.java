@@ -18,7 +18,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private final String filepath;
 	private static final String DEFAULT_OUT = "result.out";
-	
+
 	/**
 	 * 
 	 * @param filepath a full or partial path to file with symptom strings in it, one per line
@@ -26,35 +26,35 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	public ReadSymptomDataFromFile (String filepath) {
 		this.filepath = filepath;
 	}
-	
+
 	@Override
 	public List<String> getSymptoms() {
 		ArrayList<String> result = new ArrayList<>();
-		
+
 		if (filepath != null) {
 			try {
 				BufferedReader reader = new BufferedReader (new FileReader(filepath));
 				String line = reader.readLine();
-				
+
 				while (line != null) {
 					result.add(line);
 					line = reader.readLine();
 				}
 				reader.close();
-				
+
 				if (result.isEmpty()) {
 					throw new IllegalStateException("The symtomps.txt file is empty, so result.out is not written");
 				}
-				
+
 			} catch (IOException e) {
 				System.err.println("ERROR ACCESS FILE : 'symptoms.txt'");
 				e.printStackTrace();
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	public Map<String, Integer> countNumberSymptoms(List<String> listFromFile) {
 		TreeMap<String, Integer> mapSymptoms = new TreeMap<>();
 		if (listFromFile != null && !listFromFile.isEmpty()) {
@@ -64,7 +64,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 		}
 		return mapSymptoms;
 	}
-	
+
 	public void result(Map<String, Integer> res) throws IOException {
 		FileWriter writer = new FileWriter(DEFAULT_OUT);
 		for (Map.Entry<String, Integer> entry : res.entrySet()) {

@@ -20,7 +20,7 @@ public interface ISymptomReader {
 	 *         are possible probable
 	 */
 	List<String> getSymptoms();
-			 
+
 	Map<String, Integer> countNumberSymptoms(List<String> listFromFile);
 	void result(Map<String, Integer> res) throws IOException;
 
