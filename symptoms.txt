@@ -98,8 +98,8 @@ anxiety
 anxiety
 cough
 blurred vision
-covid19
-covid19
-covid20
-covid19
-covid20
+covid19 fever
+covid19 cough
+covid20 fever
+covid19 fever
+covid20 fever

@@ -17,7 +17,7 @@ import java.util.TreeMap;
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private final String filepath;
-	private static final String DEFAULT_OUT = "result.out";
+	private static final String DEFAULT_OUT = "results.out";
 
 	/**
 	 * 
@@ -43,7 +43,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				reader.close();
 
 				if (result.isEmpty()) {
-					throw new IllegalStateException("The symtomps.txt file is empty, so result.out is not written");
+					throw new IllegalStateException("The symtomps.txt file is Empty, so results.out is Not Written");
 				}
 
 			} catch (IOException e) {
@@ -54,7 +54,9 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 
 		return result;
 	}
-
+	/**
+	 * Create a map with the number of symptoms sorted in alphabetic order.
+	 **/ 
 	public Map<String, Integer> countNumberSymptoms(List<String> listFromFile) {
 		TreeMap<String, Integer> mapSymptoms = new TreeMap<>();
 		if (listFromFile != null && !listFromFile.isEmpty()) {
@@ -66,17 +68,17 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 
 	public void result(Map<String, Integer> res) throws IOException {
-		FileWriter writer = new FileWriter(DEFAULT_OUT);
+		FileWriter writer = new FileWriter(DEFAULT_OUT);               // Write in the result file.
 		for (Map.Entry<String, Integer> entry : res.entrySet()) {
 			try {
 				writer.write(entry.getKey() + "=" + entry.getValue());
 				writer.write(System.getProperty("line.separator"));
 			} catch (IOException e) {
-				System.err.println("Error Access Of result.out File");
+				System.err.println("Error Access Of results.out File");
 				e.printStackTrace();
 			}
 		}
 		writer.close();
-		System.out.println("THE 'result.out' FILE IS SUCCESSFULLY WRITTEN");
+		System.out.println("The 'results.out' File is Successfully Written");
 	}
 }
