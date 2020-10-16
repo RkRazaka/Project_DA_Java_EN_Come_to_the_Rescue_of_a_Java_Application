@@ -17,7 +17,7 @@ import java.util.TreeMap;
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private final String filepath;
-	private static final String DEFAULT_OUT = "results.out";
+	private static final String DEFAULT_OUT = "result.out";
 
 	/**
 	 * 
@@ -43,7 +43,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				reader.close();
 
 				if (result.isEmpty()) {
-					throw new IllegalStateException("The symtomps.txt file is Empty, so results.out is Not Written");
+					throw new IllegalStateException("The symtomps.txt file is Empty, so result.out is Not Written");
 				}
 
 			} catch (IOException e) {
@@ -74,11 +74,11 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				writer.write(entry.getKey() + "=" + entry.getValue());
 				writer.write(System.getProperty("line.separator"));
 			} catch (IOException e) {
-				System.err.println("Error Access Of results.out File");
+				System.err.println("Error Access Of result.out File");
 				e.printStackTrace();
 			}
 		}
 		writer.close();
-		System.out.println("The 'results.out' File is Successfully Written");
+		System.out.println("The 'result.out' File is Successfully Written");
 	}
 }

@@ -104,3 +104,4 @@ covid20 fever
 covid19 fever
 covid20 cough
 covid19 fever
+covid21
